@@ -86,16 +86,16 @@ public class PatientController {
 
     }
 
-    /* Add Doctor to Patient using PatId,DocId
-        @param PatId - Doctor Id
-        @param DocId - Doctor Id
-        return Patient with Doctor*/
-    @PutMapping("/{patientId}/doctor_assign/{doctorId}")
-    public ResponseEntity<Patient> assignDoctorToPatient(@PathVariable int patientId, @PathVariable  int doctorId) {
-        try {
-            return ResponseEntity.ok(patientService.addDoctor(doctorId, patientId).getBody());
-        } catch (Exception exception) {
-            return new ResponseEntity(exception.getMessage(), HttpStatus.BAD_REQUEST);
-        }
-    }
+//    /* Add Doctor to Patient using PatId,DocId
+//        @param PatId - Doctor Id
+//        @param DocId - Doctor Id
+//        return Patient with Doctor*/
+//    @PutMapping("/{patientId}/doctor_assign/{doctorId}")
+//    public ResponseEntity<Patient> assignDoctorToPatient(@PathVariable int patientId, @PathVariable  int doctorId) {
+//        try {
+//            return ResponseEntity.ok(patientService.addDoctor(doctorId, patientId).getBody());
+//        } catch (Exception exception) {
+//            return new ResponseEntity(exception.getMessage(), HttpStatus.BAD_REQUEST);
+//        }
+//    }
 }

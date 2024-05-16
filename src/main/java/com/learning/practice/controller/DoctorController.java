@@ -77,9 +77,9 @@ public class DoctorController {
        @param docId - Doctor Id
        return patients list*/
     @GetMapping("/getPatientsByDocId/{docId}")
-    public ResponseEntity<Doctor> getPatientListByDocId(@PathVariable int docId) {
+    public ResponseEntity<List<Patient>> getPatientListByDocId(@PathVariable int docId) {
         try {
-            Doctor patientListForDoc = doctorService.getPatientListByDocId(docId).getBody();
+            List<Patient> patientListForDoc = doctorService.getPatientListByDocId(docId).getBody();
             return new ResponseEntity<>(patientListForDoc, HttpStatus.OK);
         } catch (Exception exception) {
             return new ResponseEntity(exception.getMessage(), HttpStatus.BAD_REQUEST);

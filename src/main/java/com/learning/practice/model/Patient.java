@@ -26,19 +26,16 @@ public class Patient {
     @Column(name = "last_name", nullable = false)
     private String lastName;
 
-    @Column(name = "is_signed_consent", columnDefinition = "tinyint(1)")
-    private boolean isSignedConsent;
 
-   @ManyToOne(targetEntity = Doctor.class)
-    @JoinColumn(name = "doctor_assigned", referencedColumnName = "doctor_id")
-    @JsonView
-    private Doctor doctorAssigned;
-
-
+    @Column(name = "doctor_assigned")
+    private int doctorAssigned;
 
 //    @ManyToOne(fetch=FetchType.LAZY)
 //    @JoinColumn(name="doctor_assigned")
 //    private Doctor doctorAssigned;
+
+    @Column(name="is_signedConsent", columnDefinition="tinyint(1)")
+    private boolean isSignedConsent;
 
 }
 

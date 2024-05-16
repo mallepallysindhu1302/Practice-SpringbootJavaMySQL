@@ -39,7 +39,7 @@ public class PatientService {
 
 
     public ResponseEntity<Patient> addNewPatient(Patient patient) {
-        if (patient.getDoctorAssigned() == null) {
+        if (patient.getDoctorAssigned() == 0) {
             throw new ResourceNotFoundException("Please Choose your doctor");
         } else {
             Patient resPatient = patientRepository.save(patient);
@@ -49,7 +49,7 @@ public class PatientService {
 
     public ResponseEntity<List<Patient>> addNewPatients(List<Patient> patientList) {
         patientList.forEach(patient -> {
-            if (patient.getDoctorAssigned() == null) {
+            if (patient.getDoctorAssigned() == 0) {
                 throw new ResourceNotFoundException("Please Choose your doctor for " + patient.getFirstName());
             }
         });
@@ -78,17 +78,17 @@ public class PatientService {
         }
     }
 
-    public ResponseEntity<Patient> addDoctor(int doctorId, int patientId) {
-        try {
-            Patient patient = this.getPatientDetails(patientId).getBody();
-            Doctor doctor = doctorService.getDoctorDetails(doctorId).getBody();
-            patient.setDoctorAssigned(doctor);
-            Patient resPatient = patientRepository.save(patient);
-            return ResponseEntity.ok(resPatient);
-        } catch (Exception exception) {
-            throw exception;
-        }
-
-    }
+//    public ResponseEntity<Patient> addDoctor(int doctorId, int patientId) {
+//        try {
+//            Patient patient = this.getPatientDetails(patientId).getBody();
+//            Doctor doctor = doctorService.getDoctorDetails(doctorId).getBody();
+//            patient.setDoctorAssigned(doctorId);
+//            Patient resPatient = patientRepository.save(patient);
+//            return ResponseEntity.ok(resPatient);
+//        } catch (Exception exception) {
+//            throw exception;
+//        }
+//
+//    }
 
 }

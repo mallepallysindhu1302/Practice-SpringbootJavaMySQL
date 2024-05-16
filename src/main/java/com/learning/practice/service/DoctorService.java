@@ -73,19 +73,18 @@ public class DoctorService {
         }
     }
 
-    public ResponseEntity<Doctor> getPatientListByDocId(int docId) {
+    public ResponseEntity<List<Patient>> getPatientListByDocId(int docId) {
 
         try {
-            //this.getDoctorDetails(docId); //Checking doc record available or not
-            Doctor doctor = doctorRepository.findAllByDoctorAssigned(docId); //If doctor found pass docid to get the patient list.
-//            if (!CollectionUtils.isEmpty(patientList)) {
-//                //Filtering Patients by signed Consent
-//               // patientList = patientList.stream().filter(signedPatient -> signedPatient.isSignedConsent()).collect(Collectors.toList());
-//            }
-            if (doctor == null) {
+            //Checking doc record available or not
+            this.getDoctorDetails(docId);
+
+            //If doc exist pass id to get the patient list under doctor.
+            List<Patient> patientList = patientRepository.findAllByDoctorAssigned(docId);
+            if (CollectionUtils.isEmpty(patientList)) {
                 throw new ResourceNotFoundException("No Patients found under this doctor" + docId);
             }
-            return new ResponseEntity(doctor, HttpStatus.OK);
+            return new ResponseEntity(patientList, HttpStatus.OK);
         } catch (Exception exception) {
             throw exception;
         }

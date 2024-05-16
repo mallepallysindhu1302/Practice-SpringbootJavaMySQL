@@ -15,24 +15,22 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity //To make the class JPA Entity
-@Table(name = "doctor")
+@Table(name="doctor")
 public class Doctor {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "doctor_id")
+    @Column(name="doctor_id")
     private int doctorId;
 
-    @Column(name = "first_name", nullable = false)
+    @Column(name="first_name",nullable = false)
     private String firstName;
 
-    @Column(name = "last_name", nullable = false)
+    @Column(name="last_name",nullable=false)
     private String lastName;
 
-    @OneToMany(mappedBy = "doctorAssigned", cascade = CascadeType.ALL)
-   // @JoinColumn(name = "doctor_assigned" , referencedColumnName = "doctor_id")
-    @JsonView
-    @JsonIgnore
+    @OneToMany(cascade = CascadeType.ALL)
+    @JoinColumn(name = "doctor_assigned", referencedColumnName = "doctor_id")
     private List<Patient> patients = new ArrayList<>();
 
 }

@@ -13,11 +13,10 @@ import java.util.List;
 
 //Extends
 @Component
-public interface PatientRepository extends JpaRepository<Patient, Integer> {
+public interface PatientRepository extends JpaRepository<Patient, Integer>
+{
 
     Patient findPatientByPatientId(int patientId);
-
-    @Query(value = "select p.* from patient p where p.doctor_assigned =  :docId", nativeQuery = true )
-    List<Patient> findAllByDoctorAssigned(@Param("docId") int docId);
+    List<Patient> findAllByDoctorAssigned(int docId);
 
 }
