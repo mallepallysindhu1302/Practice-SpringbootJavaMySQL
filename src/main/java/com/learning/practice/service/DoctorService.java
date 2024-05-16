@@ -40,9 +40,9 @@ public class DoctorService {
         if (doctor == null) {
             throw new ResourceNotFoundException("Doctor not found with id: " + doctorId);
         }
-        if(!CollectionUtils.isEmpty(doctor.getPatients())){
-            List<Patient> patientList = doctor.getPatients().stream()
-                    .filter(signedPatient-> signedPatient.isSignedConsent()==true).collect(Collectors.toList());
+        if (!CollectionUtils.isEmpty(doctor.getPatients())) {
+            //Filtering Patients by signed Consent
+            List<Patient> patientList = doctor.getPatients().stream().filter(signedPatient -> signedPatient.isSignedConsent()).collect(Collectors.toList());
             doctor.setPatients(patientList);
         }
         return ResponseEntity.ok(doctor);
@@ -73,19 +73,19 @@ public class DoctorService {
         }
     }
 
-    public ResponseEntity<List<Patient>> getPatientListByDocId(int docId) {
+    public ResponseEntity<Doctor> getPatientListByDocId(int docId) {
 
         try {
-            //Checking doc record available or not
-            this.getDoctorDetails(docId);
-
-            //If doc exist pass id to get the patient list under doctor.
-            List<Patient> patientList = patientRepository.findAllByDoctorAssigned(docId);
-            if (CollectionUtils.isEmpty(patientList)) {
+            //this.getDoctorDetails(docId); //Checking doc record available or not
+            Doctor doctor = doctorRepository.findAllByDoctorAssigned(docId); //If doctor found pass docid to get the patient list.
+//            if (!CollectionUtils.isEmpty(patientList)) {
+//                //Filtering Patients by signed Consent
+//               // patientList = patientList.stream().filter(signedPatient -> signedPatient.isSignedConsent()).collect(Collectors.toList());
+//            }
+            if (doctor == null) {
                 throw new ResourceNotFoundException("No Patients found under this doctor" + docId);
             }
-            return new ResponseEntity(patientList, HttpStatus.OK);
-
+            return new ResponseEntity(doctor, HttpStatus.OK);
         } catch (Exception exception) {
             throw exception;
         }

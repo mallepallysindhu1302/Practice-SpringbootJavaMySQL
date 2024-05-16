@@ -39,12 +39,22 @@ public class PatientService {
 
 
     public ResponseEntity<Patient> addNewPatient(Patient patient) {
-        if(patient.getDoctorAssigned()==0){
+        if (patient.getDoctorAssigned() == null) {
             throw new ResourceNotFoundException("Please Choose your doctor");
+        } else {
+            Patient resPatient = patientRepository.save(patient);
+            return ResponseEntity.ok(resPatient);
         }
-        else{
-        Patient resPatient = patientRepository.save(patient);
-        return ResponseEntity.ok(resPatient);}
+    }
+
+    public ResponseEntity<List<Patient>> addNewPatients(List<Patient> patientList) {
+        patientList.forEach(patient -> {
+            if (patient.getDoctorAssigned() == null) {
+                throw new ResourceNotFoundException("Please Choose your doctor for " + patient.getFirstName());
+            }
+        });
+        List<Patient> resPatient = patientRepository.saveAll(patientList);
+        return ResponseEntity.ok(resPatient);
     }
 
     public ResponseEntity<HttpStatus> deletePatient(int patientId) {
@@ -72,7 +82,7 @@ public class PatientService {
         try {
             Patient patient = this.getPatientDetails(patientId).getBody();
             Doctor doctor = doctorService.getDoctorDetails(doctorId).getBody();
-            patient.setDoctorAssigned(doctorId);
+            patient.setDoctorAssigned(doctor);
             Patient resPatient = patientRepository.save(patient);
             return ResponseEntity.ok(resPatient);
         } catch (Exception exception) {

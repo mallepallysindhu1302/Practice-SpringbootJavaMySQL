@@ -1,5 +1,8 @@
 package com.learning.practice.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonView;
 import jakarta.persistence.*;
 import lombok.*;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
@@ -12,22 +15,24 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity //To make the class JPA Entity
-@Table(name="doctor")
+@Table(name = "doctor")
 public class Doctor {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name="doctor_id")
+    @Column(name = "doctor_id")
     private int doctorId;
 
-    @Column(name="first_name",nullable = false)
+    @Column(name = "first_name", nullable = false)
     private String firstName;
 
-    @Column(name="last_name",nullable=false)
+    @Column(name = "last_name", nullable = false)
     private String lastName;
 
-    @OneToMany(cascade = CascadeType.ALL)
-    @JoinColumn(name = "doctor_assigned", referencedColumnName = "doctor_id")
+    @OneToMany(mappedBy = "doctorAssigned", cascade = CascadeType.ALL)
+   // @JoinColumn(name = "doctor_assigned" , referencedColumnName = "doctor_id")
+    @JsonView
+    @JsonIgnore
     private List<Patient> patients = new ArrayList<>();
 
 }

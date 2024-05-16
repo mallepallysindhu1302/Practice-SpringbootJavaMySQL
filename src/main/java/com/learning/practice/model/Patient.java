@@ -2,6 +2,7 @@ package com.learning.practice.model;
 
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonView;
 import jakarta.persistence.*;
 import lombok.*;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
@@ -25,16 +26,19 @@ public class Patient {
     @Column(name = "last_name", nullable = false)
     private String lastName;
 
+    @Column(name = "is_signed_consent", columnDefinition = "tinyint(1)")
+    private boolean isSignedConsent;
 
-    @Column(name = "doctor_assigned")
-    private int doctorAssigned;
+   @ManyToOne(targetEntity = Doctor.class)
+    @JoinColumn(name = "doctor_assigned", referencedColumnName = "doctor_id")
+    @JsonView
+    private Doctor doctorAssigned;
+
+
 
 //    @ManyToOne(fetch=FetchType.LAZY)
 //    @JoinColumn(name="doctor_assigned")
 //    private Doctor doctorAssigned;
-
-    @Column(name="is_signedConsent", columnDefinition="tinyint(1)")
-    private boolean isSignedConsent;
 
 }
 

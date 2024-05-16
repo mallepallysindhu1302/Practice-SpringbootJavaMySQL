@@ -22,56 +22,66 @@ public class DoctorController {
     @Autowired
     PatientService patientService;
 
-    //Endpoint to get All Doctors
+    //Get All Doctors
     @GetMapping("/getAllDoctors")
     public List<Doctor> getAllDoctorList() {
-        return doctorService.getdoctorsList();}
+        return doctorService.getdoctorsList();
+    }
 
-    //Endpoint to get Doctor by ID
+    /*Get Doctor details by ID
+       @pararm doctorId
+       return Doctor */
     @GetMapping("getDoctor/{doctorId}")
-    public ResponseEntity<Doctor> getDoctorById(@PathVariable  int doctorId){
-        try{
-        return doctorService.getDoctorDetails(doctorId); }
-    catch(Exception exception)
-    {
-        return new ResponseEntity(exception.getMessage(), HttpStatus.BAD_REQUEST);
-    }
-    }
-
-    //Endpoint to Add New Doctor
-    @PostMapping("/createDoctor")
-    public Doctor addDoctor(@RequestBody Doctor doctor) {
-        return doctorService.addNewDoctor(doctor);   }
-
-    //Endpoint to delete Doctor
-    @DeleteMapping("/delete/{doctorId}")
-    public ResponseEntity <HttpStatus> deleteDoctorID(@PathVariable int doctorId)  {
-        try{
-            return doctorService.deleteDoctor(doctorId);
-        } catch (Exception exception){
+    public ResponseEntity<Doctor> getDoctorById(@PathVariable int doctorId) {
+        try {
+            return doctorService.getDoctorDetails(doctorId);
+        } catch (Exception exception) {
             return new ResponseEntity(exception.getMessage(), HttpStatus.BAD_REQUEST);
         }
     }
 
-    //Endpoint to update Patient
-    @PutMapping("/update/{doctorId}")
-    public ResponseEntity<Doctor> updatedoctor(@PathVariable int doctorId, @RequestBody Doctor doctor)throws IllegalAccessException {
-        try{
-            return doctorService.updateDoctor1(doctorId,doctor);
-        }
-        catch(Exception exception){
-            return new ResponseEntity(exception.getMessage(),HttpStatus.BAD_REQUEST);
-        }
-            }
+    /* Add Doctor
+       @RequestBody Doctor details
+        return Doctor */
+    @PostMapping("/createDoctor")
+    public Doctor addDoctor(@RequestBody Doctor doctor) {
+        return doctorService.addNewDoctor(doctor);
+    }
 
-    @GetMapping("/getPatientsByDocId/{docId}")
-    public ResponseEntity<List<Patient>> getPatientListByDocId(@PathVariable int docId) {
+    /* Delete Doctor using docId
+       @param docId - Doctor Id
+       return Status Ok */
+    @DeleteMapping("/delete/{doctorId}")
+    public ResponseEntity<HttpStatus> deleteDoctorID(@PathVariable int doctorId) {
         try {
-            List<Patient> patientListForDoc= doctorService.getPatientListByDocId(docId).getBody();
-            return new ResponseEntity<>(patientListForDoc, HttpStatus.OK);
+            return doctorService.deleteDoctor(doctorId);
+        } catch (Exception exception) {
+            return new ResponseEntity(exception.getMessage(), HttpStatus.BAD_REQUEST);
         }
-        catch(Exception exception)
-        {
+    }
+
+    /* Update Doctor using docId
+        @param docId - Doctor Id
+        @RequestBody Doctor Details
+        return updated Doctor */
+    @PutMapping("/update/{doctorId}")
+    public ResponseEntity<Doctor> updatedoctor(@PathVariable int doctorId, @RequestBody Doctor doctor) throws IllegalAccessException {
+        try {
+            return doctorService.updateDoctor1(doctorId, doctor);
+        } catch (Exception exception) {
+            return new ResponseEntity(exception.getMessage(), HttpStatus.BAD_REQUEST);
+        }
+    }
+
+    /* Get all the patients by docId who Signed Consent
+       @param docId - Doctor Id
+       return patients list*/
+    @GetMapping("/getPatientsByDocId/{docId}")
+    public ResponseEntity<Doctor> getPatientListByDocId(@PathVariable int docId) {
+        try {
+            Doctor patientListForDoc = doctorService.getPatientListByDocId(docId).getBody();
+            return new ResponseEntity<>(patientListForDoc, HttpStatus.OK);
+        } catch (Exception exception) {
             return new ResponseEntity(exception.getMessage(), HttpStatus.BAD_REQUEST);
         }
     }

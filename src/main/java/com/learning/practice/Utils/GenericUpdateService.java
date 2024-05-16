@@ -14,12 +14,12 @@ public class GenericUpdateService {
      * Update an existing entity with the provided updated entity details.
      *
      * @param existingEntity The existing entity fetched from the database.
-     * @param updatedEntity The updated entity containing new field values.
+     * @param updatedEntity  The updated entity containing new field values.
      * @param <T>            The type of the entity.
      * @return The updated entity.
      * @throws EntityNotFoundException if the existing entity is not found.
      */
-    public  <T> T updateEntity(T existingEntity, T updatedEntity) throws IllegalAccessException {
+    public <T> T updateEntity(T existingEntity, T updatedEntity) throws IllegalAccessException {
         // Get all fields of the entity class
         Field[] fields = existingEntity.getClass().getDeclaredFields();
 

@@ -24,53 +24,78 @@ public class PatientController {
         return patientService.getpatientsList();
     }
 
-    //Endpoint to get Patient by ID
+    /* Get Patient using PatientId
+        @param PatId - Patient Id
+        return Patient */
     @GetMapping("getPatient/{patientId}")
-    public ResponseEntity<Patient> getPatientById(@PathVariable  int patientId){
-        try{
-        return patientService.getPatientDetails(patientId);    }
-        catch(Exception exception) {
+    public ResponseEntity<Patient> getPatientById(@PathVariable int patientId) {
+        try {
+            return patientService.getPatientDetails(patientId);
+        } catch (Exception exception) {
             return new ResponseEntity(exception.getMessage(), HttpStatus.BAD_REQUEST);
         }
     }
 
-    //Endpoint to Add New Patient
+    /* Create Patient
+        @RequestBody Patient details
+        return Patient */
     @PostMapping("/createPatient")
     public ResponseEntity<Patient> addPatient(@RequestBody Patient patient) {
-      try{
-        return patientService.addNewPatient(patient);
-      } catch (Exception exception){
-          return new ResponseEntity(exception.getMessage(), HttpStatus.BAD_REQUEST);
+        try {
+            return patientService.addNewPatient(patient);
+        } catch (Exception exception) {
+            return new ResponseEntity(exception.getMessage(), HttpStatus.BAD_REQUEST);
         }
     }
 
-    //Endpoint to delete Patient
+    /* Create Patients
+    @RequestBody Patients List
+    return Patient List */
+    @PostMapping("/createPatients")
+    public ResponseEntity<List<Patient>> addPatients(@RequestBody List<Patient> patientList) {
+        try {
+            return patientService.addNewPatients(patientList);
+        } catch (Exception exception) {
+            return new ResponseEntity(exception.getMessage(), HttpStatus.BAD_REQUEST);
+        }
+    }
+
+    /* Delete Patient using PatientId
+        @param PatId - Patient Id
+        return Status OK */
     @DeleteMapping("/delete/{patientId}")
     public ResponseEntity<HttpStatus> deletePatientID(@PathVariable int patientId) {
-       try{
-           return patientService.deletePatient(patientId);
-       } catch (Exception exception){
-         return new ResponseEntity(exception.getMessage(), HttpStatus.BAD_REQUEST);
-       }
+        try {
+            return patientService.deletePatient(patientId);
+        } catch (Exception exception) {
+            return new ResponseEntity(exception.getMessage(), HttpStatus.BAD_REQUEST);
+        }
     }
 
-    //Endpoint to update Patient
+    /* Update Patient using PatientId
+        @param PatId - Patient Id
+        @RequestBody Patient Details
+        return updated Patient */
     @PutMapping("/update/{patientId}")
-    public ResponseEntity<Patient> updatePatient(@PathVariable int patientId, @RequestBody Patient patient)  {
-        try{
+    public ResponseEntity<Patient> updatePatient(@PathVariable int patientId, @RequestBody Patient patient) {
+        try {
             return patientService.updatePatient1(patientId, patient);
-        } catch (Exception exception){
-            return new ResponseEntity(exception.getMessage(),HttpStatus.BAD_REQUEST);
+        } catch (Exception exception) {
+            return new ResponseEntity(exception.getMessage(), HttpStatus.BAD_REQUEST);
         }
 
     }
 
+    /* Add Doctor to Patient using PatId,DocId
+        @param PatId - Doctor Id
+        @param DocId - Doctor Id
+        return Patient with Doctor*/
     @PutMapping("/{patientId}/doctor_assign/{doctorId}")
-    public ResponseEntity<Patient> assignDoctorToPatient(@PathVariable int doctorId, @PathVariable int patientId){
-        try{
-            return ResponseEntity.ok(patientService.addDoctor(doctorId,patientId).getBody());
-        } catch (Exception exception){
-            return new ResponseEntity(exception.getMessage(),HttpStatus.BAD_REQUEST);
+    public ResponseEntity<Patient> assignDoctorToPatient(@PathVariable int patientId, @PathVariable  int doctorId) {
+        try {
+            return ResponseEntity.ok(patientService.addDoctor(doctorId, patientId).getBody());
+        } catch (Exception exception) {
+            return new ResponseEntity(exception.getMessage(), HttpStatus.BAD_REQUEST);
         }
     }
 }

@@ -10,12 +10,12 @@ import java.sql.*;
 @SpringBootApplication(scanBasePackages = {"com.learning.practice"})
 public class PracticeApplication {
 
-	public static void main(String[] args) throws SQLException {
-		SpringApplication.run(PracticeApplication.class, args);
+    public static void main(String[] args) throws SQLException {
+        SpringApplication.run(PracticeApplication.class, args);
 
-		System.out.println("Hey iam working");
+        System.out.println("Server Up");
 
-//		Connection connection= DriverManager.getConnection("jdbc:mysql://localhost:3306/mysqlfiles","root","Sindhu@ccount1");
+//		Connection connection= DriverManager.getConnection("jdbc:mysql://localhost:3306/mysqlfiles","root","password");
 //
 //		Statement statement= connection.createStatement();
 //
@@ -31,6 +31,6 @@ public class PracticeApplication {
 //			}
 //			System.out.println(" ");
 //		}
-	}
+    }
 
 }
